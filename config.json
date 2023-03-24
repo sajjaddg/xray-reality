@@ -60,17 +60,7 @@
             "www.yahoo.com"
           ],
                     "privateKey": "",
-                    "shortIds": [
-                        "",
-                        "a1",
-                        "bc19",
-                        "b2da06",
-                        "2d940fe6",
-                        "b85e293fa1",
-                        "4a9f72b5c803",
-                        "19f70b462cea5d",
-                        "6ba85179e30d4fc2"
-          ]
+                    "shortIds": []
         }
       },
       "sniffing": {
