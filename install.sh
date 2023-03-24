@@ -19,10 +19,8 @@ json=$(echo "$json" | jq --arg uuid "$uuid" '.inbounds[0].settings.clients[0].id
 
 echo "$json" | sudo tee /usr/local/etc/xray/config.json >/dev/null
 
-# Restart xray service
 sudo service xray restart
 
-# Print public key for user
 echo "SNI: yahoo.com"
 echo "shortID: 6ba85179e30d4fc2"
 echo "network: h2"
