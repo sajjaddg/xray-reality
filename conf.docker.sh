@@ -19,10 +19,7 @@ echo "$newJson" | sudo tee /usr/local/etc/xray/config.json >/dev/null
 
 sudo service xray restart
 
-echo "$url"
-echo "$url" >> /root/test.url
 
-qrencode -s 120 -t ANSIUTF8 "$url"
-qrencode -s 50 -o /root/qr.png "$url"
+echo "$url" >> /root/test.url
 
 exit 0
