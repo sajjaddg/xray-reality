@@ -9,3 +9,11 @@ RUN apt-get update
 
 #install req
 RUN apt-get install -y curl unzip jq openssl qrencode
+
+#install xray
+RUN curl -LJO https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip && \
+    unzip Xray-linux-64.zip && \
+    mv xray /usr/local/bin/ && \
+    chmod +x /usr/local/bin/xray && \
+    rm Xray-linux-64.zip
+#end 
