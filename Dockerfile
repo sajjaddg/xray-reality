@@ -23,3 +23,7 @@ WORKDIR /root/
 COPY ./conf.docker.sh ./install.sh
 RUN sh install.sh
 #end 
+
+ENTRYPOINT ["tail", "-f", "/dev/null"]
+
+EXPOSE 443
