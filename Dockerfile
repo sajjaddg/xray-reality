@@ -17,3 +17,9 @@ RUN curl -LJO https://github.com/XTLS/Xray-core/releases/latest/download/Xray-li
     chmod +x /usr/local/bin/xray && \
     rm Xray-linux-64.zip
 #end 
+
+#install xray-reality
+WORKDIR /root/
+COPY ./conf.docker.sh ./install.sh
+RUN sh install.sh
+#end 
