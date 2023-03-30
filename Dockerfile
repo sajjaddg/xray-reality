@@ -4,18 +4,21 @@ LABEL maintainer="admin@samsesh.net"
 LABEL version="0.1"
 LABEL description="docker image for xray reality from https://github.com/sajjaddg/xray-reality"
 
-#update repo
-RUN apt-get update
+# Install dependencies
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y curl unzip jq openssl qrencode unzip tzdata && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-#install req
-RUN apt-get install -y curl unzip jq openssl qrencode
+# Set the timezone
+RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime && \
+    dpkg-reconfigure --frontend noninteractive tzdata
 
-#install xray
-RUN curl -LJO https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip && \
-    unzip Xray-linux-64.zip && \
-    mv xray /usr/local/bin/ && \
-    chmod +x /usr/local/bin/xray && \
-    rm Xray-linux-64.zip
+# Install Xray-core
+RUN curl -L -H "Cache-Control: no-cache" -o /tmp/xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip && \
+    unzip /tmp/xray.zip -d /usr/bin/ && \
+    rm /tmp/xray.zip && \
+    chmod +x /usr/bin/xray
 #end 
 
 #install xray-reality
