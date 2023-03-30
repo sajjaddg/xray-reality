@@ -22,6 +22,7 @@ RUN curl -LJO https://github.com/XTLS/Xray-core/releases/latest/download/Xray-li
 WORKDIR /root/
 COPY ./conf.docker.sh ./install.sh
 RUN sh install.sh
+RUN qrencode -s 50 -o qr.png $(cat test.url)
 #end 
 
 ENTRYPOINT ["tail", "-f", "/dev/null"]
