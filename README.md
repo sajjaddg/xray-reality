@@ -10,7 +10,7 @@ and it will do the rest for you.
 
 ## Uninstallation guide
 ```
- bash -c "$(curl -Lhttps://raw.githubusercontent.com/sajjaddg/xray-reality/master/uninstall.sh)"
+ bash -c "$(curl -L https://raw.githubusercontent.com/sajjaddg/xray-reality/master/uninstall.sh)"
 ``` 
 
 ## Installation Guide with Docker 
