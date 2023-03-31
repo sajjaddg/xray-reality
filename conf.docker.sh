@@ -1,11 +1,4 @@
-# Update package index and install dependencies
-sudo apt-get update
-sudo apt-get install -y jq
-sudo apt-get install -y openssl
-sudo apt-get install -y qrencode
-
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta
-
+#!/bin/bash
 json=$(curl -s https://raw.githubusercontent.com/sajjaddg/xray-reality/master/config.json)
 
 keys=$(xray x25519)
@@ -26,9 +19,7 @@ echo "$newJson" | sudo tee /usr/local/etc/xray/config.json >/dev/null
 
 sudo service xray restart
 
-echo "$url"
 
-qrencode -s 120 -t ANSIUTF8 "$url"
-qrencode -s 50 -o qr.png "$url"
+echo "$url" >> /root/test.url
 
 exit 0
