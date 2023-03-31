@@ -15,7 +15,7 @@ RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime && \
     dpkg-reconfigure --frontend noninteractive tzdata
 
 # Install Xray-core
-RUN curl -L -H "Cache-Control: no-cache" -o /tmp/xray.zip https://github.com/XTLS/Xray-core/releases/latest/download/Xray-linux-64.zip && \
+RUN curl -L -H "Cache-Control: no-cache" -o /tmp/xray.zip https://github.com/XTLS/Xray-core/releases/download/v1.8.0/Xray-linux-64.zip && \
     unzip /tmp/xray.zip -d /usr/bin/ && \
     rm /tmp/xray.zip && \
     chmod +x /usr/bin/xray
