@@ -8,7 +8,11 @@ just need you to run this command
 ``` 
 and it will do the rest for you.
 
-#
+## Uninstallation guide
+```
+ bash -c "$(curl -Lhttps://raw.githubusercontent.com/sajjaddg/xray-reality/master/uninstall.sh)"
+``` 
+
 ## Installation Guide with Docker 
 
 0. install docker 
