@@ -1,5 +1,6 @@
 {
     "name": "vless+tls+h2+reality",
+    "email":"sajjaddg",
     "port": 443,
     "sni": "yahoo.com",
     "path": "%2F"

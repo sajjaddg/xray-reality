@@ -35,11 +35,12 @@
   "inbounds": [
     {
       "listen": "0.0.0.0",
-      "port": 443,
+      "port": 0,
       "protocol": "vless",
       "settings": {
         "clients": [
           {
+            "email":"",
             "id": "",
             "flow": ""
           }
@@ -51,13 +52,13 @@
         "security": "reality",
         "realitySettings": {
           "show": false,
-          "dest": "yahoo.com:443",
+          "dest": ":443",
           "xver": 0,
           "maxTimeDiff": 0,
           "minClientVer": "1.8.0",
           "serverNames": [
-            "yahoo.com",
-            "www.yahoo.com"
+            "",
+            "www."
           ],
                     "privateKey": "",
                     "shortIds": []
