@@ -1,11 +1,7 @@
 {
   "api": {
     "tag": "api",
-    "services": [
-      "HandlerService",
-      "LoggerService",
-      "StatsService"
-    ]
+    "services": ["HandlerService", "LoggerService", "StatsService"]
   },
   "stats": {},
   "policy": {
@@ -40,7 +36,7 @@
       "settings": {
         "clients": [
           {
-            "email":"",
+            "email": "",
             "id": "",
             "flow": ""
           }
@@ -52,24 +48,18 @@
         "security": "reality",
         "realitySettings": {
           "show": false,
-          "dest": ":443",
+          "dest": "",
           "xver": 0,
           "maxTimeDiff": 0,
           "minClientVer": "1.8.0",
-          "serverNames": [
-            "",
-            "www."
-          ],
-                    "privateKey": "",
-                    "shortIds": []
+          "serverNames": [],
+          "privateKey": "",
+          "shortIds": []
         }
       },
       "sniffing": {
         "enabled": true,
-        "destOverride": [
-          "http",
-          "tls"
-        ]
+        "destOverride": ["http", "tls"]
       }
     },
     {
@@ -82,7 +72,6 @@
       "tag": "api"
     }
   ],
-
 
   "outbounds": [
     {
@@ -98,31 +87,22 @@
     "domainStrategy": "IPIfNonMatch",
     "rules": [
       {
-        "inboundTag": [
-          "api"
-        ],
+        "inboundTag": ["api"],
         "outboundTag": "api",
         "type": "field"
       },
       {
-        "domain": [
-          "Samandehi.ir"
-        ],
+        "domain": ["Samandehi.ir"],
         "type": "field",
         "outboundTag": "blocked"
       },
       {
         "type": "field",
-        "ip": [
-          "geoip:ir",
-          "geoip:private"
-        ],
+        "ip": ["geoip:ir", "geoip:private"],
         "outboundTag": "blocked"
       },
       {
-        "protocol": [
-          "bittorrent"
-        ],
+        "protocol": ["bittorrent"],
         "type": "field",
         "outboundTag": "blocked"
       }
