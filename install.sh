@@ -20,7 +20,7 @@ json=$(curl -s https://raw.githubusercontent.com/sajjaddg/xray-reality/master/co
 keys=$(xray x25519)
 pk=$(echo "$keys" | awk '/Private key:/ {print $3}')
 pub=$(echo "$keys" | awk '/Public key:/ {print $3}')
-serverIp=$(curl -s ifconfig.me)
+serverIp=$(curl -s ipv4.wtfismyip.com/text)
 uuid=$(xray uuid)
 shortId=$(openssl rand -hex 8)
 
