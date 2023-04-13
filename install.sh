@@ -9,9 +9,15 @@ curl -s https://raw.githubusercontent.com/sajjaddg/xray-reality/master/default.j
 # Extract the desired variables using jq
 name=$(jq -r '.name' config.json)
 email=$(jq -r '.email' config.json)
-port=$(jq -r '.port' config.json)
-sni=$(jq -r '.sni' config.json)
 path=$(jq -r '.path' config.json)
+
+# Prompt user for custom port and SNI values
+read -p "Enter a custom port (default $((port:=$(jq -r '.port' config.json)))): " custom_port
+read -p "Enter a custom SNI (default $((sni:=($(jq -r '.sni' config.json))))): " custom_sni
+
+port=${custom_port:-$port}
+sni=${custom_sni:-$sni}
+
 
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta
 
@@ -44,8 +50,9 @@ newJson=$(echo "$json" | jq \
 echo "$newJson" | sudo tee /usr/local/etc/xray/config.json >/dev/null
 sudo systemctl restart xray
 
+# Print URL & QR code
 echo "$url"
-
+echo "QR code:"
 qrencode -s 120 -t ANSIUTF8 "$url"
 qrencode -s 50 -o qr.png "$url"
 
