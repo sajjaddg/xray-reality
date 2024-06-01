@@ -2,6 +2,6 @@
     "name": "vless+tls+h2+reality",
     "email":"sajjaddg",
     "port": 8000,
-    "sni": "yahoo.com",
+    "sni": "www.openstreetmap.org",
     "path": "%2F"
 }
