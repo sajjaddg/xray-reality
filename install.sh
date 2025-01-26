@@ -1,12 +1,22 @@
 #!/bin/bash
 
-# Update package index and install dependencies
+# Only modified section - argument handling for JSON URL
+json_url="https://raw.githubusercontent.com/sajjaddg/xray-reality/master/config.json"
+while [[ $# -gt 0 ]]; do
+    case $1 in
+        --url) json_url="$2"; shift 2 ;;
+        --) shift; break ;;
+        *) shift ;;
+    esac
+done
+
+# Original script continues unchanged below
+# --------------------------------------------------
 sudo apt-get update
 sudo apt-get install -y jq openssl qrencode
 
 curl -s https://raw.githubusercontent.com/sajjaddg/xray-reality/master/default.json > config.json
 
-# Extract the desired variables using jq
 name=$(jq -r '.name' config.json)
 email=$(jq -r '.email' config.json)
 port=$(jq -r '.port' config.json)
@@ -15,7 +25,8 @@ path=$(jq -r '.path' config.json)
 
 bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --version v1.8.23
 
-json=$(curl -s https://raw.githubusercontent.com/sajjaddg/xray-reality/master/config.json)
+# Modified JSON line (now uses variable)
+json=$(curl -s "$json_url")
 
 keys=$(xray x25519)
 pk=$(echo "$keys" | awk '/Private key:/ {print $3}')
@@ -45,7 +56,6 @@ echo "$newJson" | sudo tee /usr/local/etc/xray/config.json >/dev/null
 sudo systemctl restart xray
 
 echo "$url"
-
 qrencode -s 120 -t ANSIUTF8 "$url"
 qrencode -s 50 -o qr.png "$url"
 

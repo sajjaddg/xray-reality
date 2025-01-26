@@ -1,0 +1,112 @@
+{
+    "api": {
+      "tag": "api",
+      "services": ["HandlerService", "LoggerService", "StatsService"]
+    },
+    "stats": {},
+    "policy": {
+      "levels": {
+        "0": {
+          "statsUserUplink": true,
+          "statsUserDownlink": true
+        }
+      },
+      "system": {
+        "statsInboundUplink": true,
+        "statsInboundDownlink": true,
+        "statsOutboundUplink": true,
+        "statsOutboundDownlink": true
+      }
+    },
+    "dns": {
+      "servers": [
+        "https+local://cloudflare-dns.com/dns-query",
+        "1.1.1.1",
+        "1.0.0.1",
+        "8.8.8.8",
+        "8.8.4.4",
+        "localhost"
+      ]
+    },
+    "inbounds": [
+      {
+        "listen": "0.0.0.0",
+        "port": 0,
+        "protocol": "vless",
+        "settings": {
+          "clients": [
+            {
+              "email": "",
+              "id": "",
+              "flow": "xtls-rprx-vision"
+            }
+          ],
+          "decryption": "none"
+        },
+        "streamSettings": {
+          "network": "tcp",
+          "security": "reality",
+          "realitySettings": {
+            "show": false,
+            "dest": "",
+            "xver": 0,
+            "maxTimeDiff": 0,
+            "minClientVer": "1.8.0",
+            "serverNames": [],
+            "privateKey": "",
+            "shortIds": []
+          }
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": ["http", "tls"]
+        }
+      },
+      {
+        "listen": "127.0.0.1",
+        "port": 10085,
+        "protocol": "dokodemo-door",
+        "settings": {
+          "address": "127.0.0.1"
+        },
+        "tag": "api"
+      }
+    ],
+  
+    "outbounds": [
+      {
+        "protocol": "freedom",
+        "tag": "direct"
+      },
+      {
+        "protocol": "blackhole",
+        "tag": "blocked"
+      }
+    ],
+    "routing": {
+      "domainStrategy": "IPIfNonMatch",
+      "rules": [
+        {
+          "inboundTag": ["api"],
+          "outboundTag": "api",
+          "type": "field"
+        },
+        {
+          "domain": ["Samandehi.ir"],
+          "type": "field",
+          "outboundTag": "blocked"
+        },
+        {
+          "type": "field",
+          "ip": ["geoip:ir", "geoip:private"],
+          "outboundTag": "blocked"
+        },
+        {
+          "protocol": ["bittorrent"],
+          "type": "field",
+          "outboundTag": "blocked"
+        }
+      ]
+    }
+  }
+  
