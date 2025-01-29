@@ -34,10 +34,10 @@ if ! command -v git &> /dev/null; then
 fi
 
 # Clone your repository
-REPO_DIR="xray-reality"
+REPO_DIR="xray-installer"
 if [ ! -d "$REPO_DIR" ]; then
     echo "📥 Cloning repository..."
-    git clone https://github.com/sajjaddg/xray-reality.git
+    git clone https://github.com/sajjaddg/xray-installer.git
 else
     echo "✅ Repository already cloned."
 fi
