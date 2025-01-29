@@ -1,62 +1,54 @@
 #!/bin/bash
 
-# Only modified section - argument handling for JSON URL
-json_url="https://raw.githubusercontent.com/sajjaddg/xray-reality/master/config.json"
+# Update system
+echo "🔄 Updating system..."
+sudo apt-get update
+
+# Install Git if not installed
+if ! command -v git &> /dev/null; then
+    echo "🛠 Installing Git..."
+    sudo apt-get install -y git
+fi
+
+# Clone your repository
+REPO_DIR="xray-installer"
+if [ ! -d "$REPO_DIR" ]; then
+    echo "📥 Cloning repository..."
+    git clone https://github.com/sajjaddg/xray-installer.git
+else
+    echo "✅ Repository already cloned."
+fi
+
+# Change to project directory
+cd "$REPO_DIR" || exit
+
+# Install Node.js if not installed
+if ! command -v node &> /dev/null; then
+    echo "🛠 Installing Node.js..."
+    curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+    sudo apt-get install -y nodejs
+fi
+
+# Install npm dependencies
+echo "📦 Installing npm dependencies..."
+npm install
+
+# Parse command-line arguments
+type="h2"  # Default type
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --url) json_url="$2"; shift 2 ;;
-        --) shift; break ;;
-        *) shift ;;
+        --type)
+            type="$2"
+            shift 2
+            ;;
+        *)
+            shift
+            ;;
     esac
 done
 
-# Original script continues unchanged below
-# --------------------------------------------------
-sudo apt-get update
-sudo apt-get install -y jq openssl qrencode
+# Run the Node.js CLI with the selected type
+echo "🚀 Running xray-installer with type: $type"
+npm run build
 
-curl -s https://raw.githubusercontent.com/sajjaddg/xray-reality/master/default.json > config.json
-
-name=$(jq -r '.name' config.json)
-email=$(jq -r '.email' config.json)
-port=$(jq -r '.port' config.json)
-sni=$(jq -r '.sni' config.json)
-path=$(jq -r '.path' config.json)
-
-bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install --beta
-
-# Modified JSON line (now uses variable)
-json=$(curl -s "$json_url")
-
-keys=$(xray x25519)
-pk=$(echo "$keys" | awk '/Private key:/ {print $3}')
-pub=$(echo "$keys" | awk '/Public key:/ {print $3}')
-serverIp=$(curl -s ipv4.wtfismyip.com/text)
-uuid=$(xray uuid)
-shortId=$(openssl rand -hex 8)
-
-url="vless://$uuid@$serverIp:$port?type=http&security=reality&encryption=none&pbk=$pub&fp=chrome&path=$path&sni=$sni&sid=$shortId#$name"
-
-newJson=$(echo "$json" | jq \
-    --arg pk "$pk" \
-    --arg uuid "$uuid" \
-    --arg port "$port" \
-    --arg sni "$sni" \
-    --arg path "$path" \
-    --arg email "$email" \
-    '.inbounds[0].port= '"$(expr "$port")"' |
-     .inbounds[0].settings.clients[0].email = $email |
-     .inbounds[0].settings.clients[0].id = $uuid |
-     .inbounds[0].streamSettings.realitySettings.dest = $sni + ":443" |
-     .inbounds[0].streamSettings.realitySettings.serverNames += ["'$sni'", "www.'$sni'"] |
-     .inbounds[0].streamSettings.realitySettings.privateKey = $pk |
-     .inbounds[0].streamSettings.realitySettings.shortIds += ["'$shortId'"]')
-
-echo "$newJson" | sudo tee /usr/local/etc/xray/config.json >/dev/null
-sudo systemctl restart xray
-
-echo "$url"
-qrencode -s 120 -t ANSIUTF8 "$url"
-qrencode -s 50 -o qr.png "$url"
-
-exit 0
+xray-installer --type "$type"

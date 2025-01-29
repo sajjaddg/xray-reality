@@ -1,9 +1,9 @@
 {
-    "name": "vless+tls+h2+reality",
+    "name": "vless+tls+tcp+vision+reality",
     "email":"sajjaddg",
     "port": 8000,
     "sni": "www.openstreetmap.org",
     "path": "%2F",
-    "network-tcp":"h2",
-    "flow":""
+    "network":"tcp",
+    "flow":"xtls-rprx-vision"
 }
