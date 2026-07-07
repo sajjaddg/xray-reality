@@ -1,5 +1,5 @@
 {
-    "name": "vless+tls+h2+reality",
+    "name": "vless+tls+tcp+reality",
     "email":"sajjaddg",
     "port": 8000,
     "sni": "www.openstreetmap.org",
