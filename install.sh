@@ -24,7 +24,7 @@ serverIp=$(curl -s ipv4.wtfismyip.com/text)
 uuid=$(xray uuid)
 shortId=$(openssl rand -hex 8)
 
-url="vless://$uuid@$serverIp:$port?type=http&security=reality&encryption=none&pbk=$pub&fp=chrome&path=$path&sni=$sni&sid=$shortId#$name"
+url="vless://$uuid@$serverIp:$port?type=tcp&security=reality&encryption=none&pbk=$pub&fp=chrome&path=$path&sni=$sni&sid=$shortId#$name"
 
 newJson=$(echo "$json" | jq \
     --arg pk "$pk" \
