@@ -51,7 +51,7 @@ docker stop xrayreality
 ```
 > start :
 ``` bash
-docker stop xrayreality
+docker start xrayreality
 ```
 >remove :
 ``` bash
